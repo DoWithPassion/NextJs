@@ -68,4 +68,26 @@
 - When we are ready for going to production, we can run the `npm run build` which inturn execute `next build` command to build the optimised code output for deployment. 
 - And to start the optimised deployment server, run `npm start` which in turn execute `next start`.
 - You can make sure these npm commands and next commands mapping in the scripts section of the package.json
-- 
+
+## React
+- ReactJs is a client side javascript library which runs on the browser.
+- It helps us to build modern reactive user interfaces for the website in an easier way.
+- Its give a good structure to our code in a declarative and component focused approach.
+- React controls entire frontend of a web application means each part of the webpage that we are looking can be done in react.
+- It can follow widget approach (Some pages are rendered and served by the server and some are by the reactjs) or Single Page Applications Approach (Html page is sent by the server only once and thereafter, React takes over and controls the UI.)
+- It is a components based UI library in which every thing is a component. And some other features are added via external packages available in the community.
+- In react we write the  code in JSX(JavaScript XML) in which we mix up the react code with Javascript to make things easier.
+- This JSX is converted to the HTML..behind the scenes while we are getting the view in browser.
+- We can create a boiler plate code for the react project using `create-react-app` command.
+
+### Boiler Plate code & Setup (Sample code setup)
+- Make sure that nodejs is installed in your system
+- Run the below command in the location where you wanted to create the project with boiler plate code.
+    `npx create-react-app <Your Project Name Here>`
+- After that go to the project folder and run the below command to start the development server (with the basic code got from the above command).
+    `npm start`
+- Now we can see the starting app in the browser and by default running in the port 3000.
+- You can use the same settings with same IDE as we discussed for the NEXT JS in above section.
+
+- NextJS is a framework, in that what we write is reactjs code.
+
