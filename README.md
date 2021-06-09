@@ -91,3 +91,31 @@
 
 - NextJS is a framework, in that what we write is reactjs code.
 
+## Pre-Rendering
+   1. Static Generation
+       - All the pages are pre-generated in advance in build time.
+       - When we build the application for production, before we deploy it the production.
+       - As Pages are prepared ahead to the time, they can be cached by the server/CDN serving the app.
+       - The function used in the pages to prerender is,
+            `export async function gerStaticProps(context){..}`
+            - Should always return the object with the props key which will be returned to the component on that page.
+       - Any code we put in this function will never seen by the client side users/ in the browser.
+       - You will not have access to standard client side APIs/objects like window in this function.
+       - We can write any code that normally run on the server.(Means while building itself it is executed and static content is generated)
+       - You can use the function for safe writing of some credentials here.
+       - **Next JS pre-renders all the pages that have no dynamic data.**
+       - It can't be used to the data that changes frequently. If you want to change the data generated in this function it need to be redeployed and server should start again.
+       - To avoid this problem while using the static generation, nextjs provides a feature called **Incremental Static Generation**.
+    
+    1.1 **Incremental Static Generation:**
+        - It prerenders the page.
+        - By using this feature we can regenerate the page on every request atmost every X seconds while production(in the server side not in the browser).
+        - That means We can serve old page if the regeneration is not needed yet/ not old yet. Or else we can,
+        - Generate, store and serve "new" page which will replace the existing old page on the server. It will be cached and this regenerated page after X seconds can be seen by the future visitors.
+        - To unlock this feature, we just need to return another key along with the props in the  `export async function gerStaticProps(context){..}` function which is **revalidate**. It takes no of seconds as input.
+    
+   
+   2. Server-side Rendering
+       - The pages are created just in time after deployment, when a request reaches the server.
+       - 
+    
