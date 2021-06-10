@@ -91,7 +91,7 @@
 
 - NextJS is a framework, in that what we write is reactjs code.
 
-## Pre-Rendering
+## Data Fetching
    1. Static Generation
        - All the pages are pre-generated in advance in build time.
        - When we build the application for production, before we deploy it the production.
