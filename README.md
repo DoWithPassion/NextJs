@@ -154,7 +154,7 @@
        - It also should return an object that should contain props key, may contain redirect and notFound key. But revalidate key cant be used as by default the serverside props will always run again for every request.
        - This also accepts a parameter called context and this context contains all that are available in the context of static props and also includes the req and res objects.
 
- ## useSWR
+ ### useSWR
  - It is a react hook developed by nextjs community but it can be used in normal react projects also (but not on serverside).
  - This is a hook which underhood sends a http request using fetch API.
  - Stale-While-Revalidate (SWR) is a strategy to first return the data from cache(stale), then send the fetch request(revalidate) and finally come with the up-to-date data.
