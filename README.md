@@ -98,7 +98,8 @@
        - As Pages are prepared ahead to the time, they can be cached by the server/CDN serving the app.
        - The function used in the pages to prerender is,
             `export async function gerStaticProps(context){..}`
-            - Should always return the object with the props key which will be returned to the component on that page.
+        - Should always return the object with the props key which will be returned to the component on that page.
+        - The context parameter contains details of the application.
        - Any code we put in this function will never seen by the client side users/ in the browser.
        - You will not have access to standard client side APIs/objects like window in this function.
        - We can write any code that normally run on the server.(Means while building itself it is executed and static content is generated)
@@ -107,15 +108,42 @@
        - It can't be used to the data that changes frequently. If you want to change the data generated in this function it need to be redeployed and server should start again.
        - To avoid this problem while using the static generation, nextjs provides a feature called **Incremental Static Generation**.
     
-    1.1 **Incremental Static Generation:**
-        - It prerenders the page.
-        - By using this feature we can regenerate the page on every request atmost every X seconds while production(in the server side not in the browser).
-        - That means We can serve old page if the regeneration is not needed yet/ not old yet. Or else we can,
-        - Generate, store and serve "new" page which will replace the existing old page on the server. It will be cached and this regenerated page after X seconds can be seen by the future visitors.
-        - To unlock this feature, we just need to return another key along with the props in the  `export async function gerStaticProps(context){..}` function which is **revalidate**. It takes no of seconds as input.
-    
+  1.1 **Incremental Static Generation:**
+     - It prerenders the page.
+     - By using this feature we can regenerate the page on every request atmost every X seconds while production(in the server side not in the browser).
+     - That means We can serve old page if the regeneration is not needed yet/ not old yet. Or else we can,
+     - Generate, store and serve "new" page which will replace the existing old page on the server. It will be cached and this regenerated page after X seconds can be seen by the future visitors.
+     - To unlock this feature, we just need to return another key along with the props in the  `export async function gerStaticProps(context){..}` function which is **revalidate**. It takes no of seconds as input. 
+     - getStaticProps function can return the object with the following keys:
+        1. props - these will be passed to the component in that page.
+        2. revalidate - No of seconds to re-render the page(until then the last rerendered page is shown.)
+        3. notFound - It points to boolean value(true/false). If it is true 404 page will be rendered. By default it is false. It is mostly used in cases like when the data is not fetched or in other scenarios where we need to show the 404 page.
+        4. redirect - We can redirect to another page instead of showing the current page.
+     - getStaticProps function can accepts one parameter, called context. It can be named as you like but it specifically means context of application.
+     context = {
+        "params": [Means url params],
+        
+     }
+     
+   - If you have a dynamic page [params].js, by default the page is not pre-generated. Because nextjs dont know how many pages need to be prerendered by that page slug. So the staticProps will cause an error if we use in the dynamic pages.
+   - Dynamic pages need to know which param values will be available for this js file, [param].js as multiple concrete page instances will be pre-generated for based on thr param values.
+   - So for that, another export function is provided by next js in the page.
+   - That is 
+        `export async function getStaticPaths(){}`
+   - It should also return an object as the getStaticProps does.
+   - It returns the object with the following keys:
+            1. paths: Its an array of objects which help nextjs to identify the pages that need to be pre-rendered directly in case of the dynamic route pages. Each object can contains,
+                    -  params: {param:'<param_value>'}
+            2. fallback: Suppose, if we took something like e-commerce page, if all the product detail pages are prerendered, it will not be good and it takes much long time to load all this pages which are not even opened sometimes.
+                - fallback: false - Just the default option, to pre-render the pages.
+                - fallback: true - The remaining pages that are not mentioned in the paths object are generated just in time.
+           - So by returning these two keys, it allows us to pre-generate highly visited product pages by specifying them in the paths and setting fallback will load the page just in time.
+           - But there will be a problem while using the fallback, if the user directly goes to that particular path it will not be loaded immediately so the props got from getstaticprops cause errors. Because this page is not pre-generated as we restricted with particular paths in paths key of the object returned by getStaticPaths as it takes *some time*.
+          - We can overcome this in **two ways**. Using Fallback state or specifying fallback as blocking instead of true.
+          - So, when we are using fallback feature, we should prepare a **fallback state** in our component.(Checking whether we got the required static props in to the component. If not just return other/loading component for mean time.) After we got the data it will be automatically rendered. 
+          - **fallback:blocking** blocks loading the page directly until the data is loaded but it sometimes take long based on the content we load.
    
    2. Server-side Rendering
        - The pages are created just in time after deployment, when a request reaches the server.
-       - 
+          - 
     
