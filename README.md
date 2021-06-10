@@ -124,6 +124,7 @@
         "params": [Means url params],
         
      }
+   - But this context does not contain any request object.
      
    - If you have a dynamic page [params].js, by default the page is not pre-generated. Because nextjs dont know how many pages need to be prerendered by that page slug. So the staticProps will cause an error if we use in the dynamic pages.
    - Dynamic pages need to know which param values will be available for this js file, [param].js as multiple concrete page instances will be pre-generated for based on thr param values.
@@ -142,8 +143,30 @@
           - We can overcome this in **two ways**. Using Fallback state or specifying fallback as blocking instead of true.
           - So, when we are using fallback feature, we should prepare a **fallback state** in our component.(Checking whether we got the required static props in to the component. If not just return other/loading component for mean time.) After we got the data it will be automatically rendered. 
           - **fallback:blocking** blocks loading the page directly until the data is loaded but it sometimes take long based on the content we load.
+          - If we are using fallback and fallback state, when we are trying to access the page which is not there, we will get an error as static props cannot render the page. In such scenarios we also needs to check for that conditions and return the notFound as true from static props.(there comes the use of notFound key)
    
    2. Server-side Rendering
        - The pages are created just in time after deployment, when a request reaches the server.
-          - 
-    
+       - It is used when we need to pre-render page for every request OR need access to request object.
+       - So by using this, NextJs allows us to run Real Server Side Code as well.
+       -    `export async function getServerSideProps(){}`
+       -    Both server-side and  static props are used for the same purpose of returning props to the component but they will run at different point of times.
+       - It also should return an object that should contain props key, may contain redirect and notFound key. But revalidate key cant be used as by default the serverside props will always run again for every request.
+       - This also accepts a parameter called context and this context contains all that are available in the context of static props and also includes the req and res objects.
+
+ ## useSWR
+ - It is a react hook developed by nextjs community but it can be used in normal react projects also (but not on serverside).
+ - This is a hook which underhood sends a http request using fetch API.
+ - Stale-While-Revalidate (SWR) is a strategy to first return the data from cache(stale), then send the fetch request(revalidate) and finally come with the up-to-date data.
+ - It provides the features like **automatic revalidation retries on error**.
+ - `npm i swr`
+ - useSWR requires typically atleast a URL of the request. 
+ - Eg:
+ ```
+    const {data,error} = useSWR("url")
+    if(!data)
+        return <p>Loading...</p>
+     if(error)
+        return <p>Cannot load data..</p>
+ ```
+ 
