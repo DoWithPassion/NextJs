@@ -170,3 +170,6 @@
         return <p>Cannot load data..</p>
  ```
  
+### _app.js
+- It is a special next js file which allows us to set application wide settings.
+ 
