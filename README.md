@@ -169,7 +169,27 @@
      if(error)
         return <p>Cannot load data..</p>
  ```
- 
+
 ### _app.js
+- It should be in/added in pages folder.
 - It is a special next js file which allows us to set application wide settings.
+- It can be treated something like root component inside of the body section of our HTML document.
+- It is the main entry point of the nextjs application.
+
+### _document.js
+- It is should also be added in pages folder, if we want to use it.
+- It allows us to customize the entire HTML document.
+- All the HTML elements can be customized in the _document.js
+- Here we need to add a special component, It must be class based component because it must extend some component offered and provided by nextjs.
+- The component that we need to extend is Document component from next/document.
+- We need to add a render method which returns some jsx element specific to the Document.
+- All the components like HTML,Head, Main, NextScript from the nextjs should be imported and used in the class component that extends the document and in the _document.js.
+- This document allows us to add attribute, tags or other directly on the html webpage.
+- Main component is the used to render the nextjs components.
+- So other than that we can add any tags outside of the nextjs components can be added here.
+#### Default Structure of the JSX element returned in _document.js
+- We need to return the jsx elements wrapped with HTML component in the render method.
+- Then we have the Head component and <body> tag are in the HTML.
+- Main component and Nextscript component can be used in the body tag.
+    
  
