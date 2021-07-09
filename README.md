@@ -122,8 +122,7 @@
      - getStaticProps function can accepts one parameter, called context. It can be named as you like but it specifically means context of application.
      context = {
         "params": [Means url params],
-        
-     }
+        }
    - But this context does not contain any request object.
      
    - If you have a dynamic page [params].js, by default the page is not pre-generated. Because nextjs dont know how many pages need to be prerendered by that page slug. So the staticProps will cause an error if we use in the dynamic pages.
@@ -189,7 +188,15 @@
 - So other than that we can add any tags outside of the nextjs components can be added here.
 #### Default Structure of the JSX element returned in _document.js
 - We need to return the jsx elements wrapped with HTML component in the render method.
-- Then we have the Head component and <body> tag are in the HTML.
+- Then we have the Head component and body tag are in the HTML.
 - Main component and Nextscript component can be used in the body tag.
-    
+
+### Optimizing Images
+ - We can use the Image component from the next/image for optimizing the images instead of standard image element.
+ - When we use this Image Component, next js will create multiple versions of our image on the fly.
+ - When requests for the image are coming in, it optimize for the operating systems and device sizes that are making requests.
+ - Later they are cached for future requests from similar devices.
+ - These generated images are stored in .next/cache folder.
+ - By default images are lazy loaded by using the Image component.
+ - And it also done many background optimizations.
  
