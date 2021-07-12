@@ -200,3 +200,6 @@
  - By default images are lazy loaded by using the Image component.
  - And it also done many background optimizations.
  
+## API Routes
+- Next js supports rest api routes.
+- /api path URLs dont return pages(HTML) but instead behave as a REST API.
