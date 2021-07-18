@@ -80,6 +80,9 @@
 - This JSX is converted to the HTML..behind the scenes while we are getting the view in browser.
 - We can create a boiler plate code for the react project using `create-react-app` command.
 
+### Context
+- React Context is a method to pass props from parent to child component(s), by storing the props in a store(similar in Redux) and using these props from the store by child component(s) without actually passing them manually at each level of the component tree.
+
 ### Boiler Plate code & Setup (Sample code setup)
 - Make sure that nodejs is installed in your system
 - Run the below command in the location where you wanted to create the project with boiler plate code.
