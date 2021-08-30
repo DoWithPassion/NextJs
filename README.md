@@ -227,3 +227,43 @@
 3. Do a test build and test the production-ready app locally or on some test server. Then if any changes required, then go to step 1 and repeat
 4. Deploy
 
+## How authentication work?
+- When user had gave the details and clicked on login, client(browser) will send a request with user credentials to the server. 
+- On the server credentials are validated and a relevant accept/decline response is sent to the client.
+- Based on that we will do operations.
+- And if there is a protected route and if the user requested that route, the client will exchange some kind of credential information with the server saying that user is authenticated, so need a particular page.
+
+## Authentication Mechanisms
+- Mainly, there are two kinds of mechanisms for secure exchange of credentials b/w client and server.
+1. Server Side Sessions
+    - We generate some unique identifier on the server and send the same identifier to the client that sent us the credentials.
+    - Then on the client we can store that identifier and then we can use it later to attach it to the requests which we will send to get the protected resources on the server.
+    - And the server will always be able to extract the identifier from the incoming requests, check if the identifier is on the database and if it matches then it will grant access else will declines.
+    ----------------------------------------------------------------------------------
+    - While the identifier is in transit it shouldn't be stolen because we should be using some SSL for encrypting to connection.
+    - And when it is stored on the client side, we typically store in the cookies but we should make sure that the cookies must be configured in a way that it's not accessible through javascript for preventing aganist cross-site scripting attacks.
+    - Means that is should be only readable from the server when it is attached to outgoing requests.
+
+2. Authentication Tokens
+    - In this type of mechanism server will create the token but will not store the permission token on the server and send it to the client.
+    - Then client can save that token and again attach it along with request to get the protected resources from server.
+    - Now, even though the server doesnot store the token in a database or anywhere else, the server knows how it's signed that token and able to verify the token.
+    - Most of the SPAs (/pregenerated pages) work with tokens instead of sessions. 
+   Because
+    a. Pages are served directly and populated with logic without hitting server unneccessarily.
+    b. Backend APIs that we use for single page applications or statically generated pages are typically stateless and they dont store/ dont care about connected clients.
+   - Using this way, servers dont store the information about authenticated clients and Instead, clients will get information that allows them to prove their authentication. So we use Tokens concept.
+
+### Understanding JWT (JSON Web Tokens)
+- JSON web token is generated with 3 main blocks.
+1. Issuer Data
+    - Some data which is automatically added into the token by the server when that token is generated. That is something like some metadata which we typically don't setup ourselves as a developer but which is pre-configured by the third party packages.
+2. Custom Data
+    -  Some user data that we want to transit.
+3. Secret Signing Key
+    - We setup a secret key on the server which is never seen by the client and its important because using this key we can create a valid tokens which are accepted by the server.
+
+- Server side token creation + signing - JSON Web token
+-  JSON web token is signed but not encrypted and can be parsed & read by anyone but without knowing the key as key is not included in the token even you unpack it.
+-  This token can be used on the requests to the server to get the protected resources from the server.
+
