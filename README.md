@@ -267,3 +267,9 @@
 -  JSON web token is signed but not encrypted and can be parsed & read by anyone but without knowing the key as key is not included in the token even you unpack it.
 -  This token can be used on the requests to the server to get the protected resources from the server.
 
+## NextAuth
+-  Using this package, we can implement both serverside and client side authentication capabilities.
+-  Means, we can verify the user whether he is logged in or not in serverside and also we'll be able to use in the clientside components for same.
+-  It also help us to generate the authentication tokens(JSON web tokens).
+-  It supports various databases if we use the authentication providers but if we implement our own authentication then we need to add our own logic for creating and maintaining data of the users.
+
