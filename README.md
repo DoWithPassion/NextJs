@@ -273,3 +273,30 @@
 -  It also help us to generate the authentication tokens(JSON web tokens).
 -  It supports various databases if we use the authentication providers but if we implement our own authentication then we need to add our own logic for creating and maintaining data of the users.
 
+### getSession
+-  Its a function in the next-auth/client
+-  It is used to get the current session.
+-  It returns a promise that need to be handle to get the session obj.
+-  If current session is present it will return the obj else it will return null.
+-  It can be called client or server side to return a session asynchronously.
+-  It calls /api/auth/session and returns a promise with a session object, or null if no session exists.
+
+### useSession
+- React Hook that gives you access to the logged in user's session data.
+- It returns the session object and a boolean val specifying whether it is trying to get the session or already got it. (something like loading flag).
+
+### signIn
+- Client-side method to initiate a signin flow or send the user to the signin page listing all possible providers. 
+- Automatically adds the CSRF token to the request.
+- It takes the type of provider and the signIn options as arguments.
+- signIn options include redirect flagm callback url and also the credentials we want to pass to authorize the request
+
+### NextAuth
+- It is a function that need to be return in the api routes [...nextauth].js file.
+- It takes a object of NextAuthOptions we can configure like sessions (like jwt), providers(include various oauth providers)
+#### authorize
+- It should be implemented if we use our own credentials type.
+- A method which next js calls when it receives incoming login request.
+- In this method we need to authorize or verify the user by checking the credentials.
+
+
